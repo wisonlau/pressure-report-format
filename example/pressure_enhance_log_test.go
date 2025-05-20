@@ -73,7 +73,7 @@ func TestAPIPressure(t *testing.T) {
 				mu.Lock()
 				if err != nil {
 					failures++
-					// 错误智能分类（新增）
+					// 错误智能分类
 					errType := classifyError(err)
 					errorMessages[errType]++
 				} else {
@@ -117,14 +117,14 @@ func TestAPIPressure(t *testing.T) {
 		PeakConcurrent:  peakConcurrent,
 		GCNum:           getGCNum(),
 		CPUUsage:        cpuMon.Usage(),
-		Goroutines:      runtime.NumGoroutine(),        // 新增
+		Goroutines:      runtime.NumGoroutine(),
 		MemAllocMB:      float64(memStats.Alloc) / 1e6, // 字节转MB
 		GoroutineLeak:   goroutineLeak,
 		StartGoroutines: startGoroutines,
 	})
 }
 
-// 智能错误分类（新增）
+// 智能错误分类
 func classifyError(err error) string {
 	switch {
 	case strings.Contains(err.Error(), "timeout"):
@@ -175,10 +175,10 @@ type TestResult struct {
 	PeakConcurrent  int32   // 峰值并发
 	GCNum           uint32  // GC次数
 	CPUUsage        float64 // CPU使用率百分比
-	Goroutines      int     // 新增：当前goroutine数量
-	MemAllocMB      float64 // 新增：内存分配量(MB)
-	GoroutineLeak   bool    // 新增：goroutine泄漏标记
-	StartGoroutines int     // 新增：测试开始时的goroutine数量
+	Goroutines      int     // 当前goroutine数量
+	MemAllocMB      float64 // 内存分配量(MB)
+	GoroutineLeak   bool    // goroutine泄漏标记
+	StartGoroutines int     // 测试开始时的goroutine数量
 }
 
 // PrintEnhancedReport 增强版测试报告
@@ -239,7 +239,7 @@ P99:        %v
 GC次数:     %d
 CPU使用率:  %.4f%%
 Goroutines: %d (初始: %d) %s 
-内存分配:    %.2f MB`,
+内存占用:    %.2f MB`,
 		result.Concurrency,
 		result.TotalCalls,
 		result.Failures,
@@ -342,7 +342,7 @@ func getProcessCPUTime() uint64 {
 	return 0
 }
 
-// 新增辅助函数
+// 辅助函数
 func maxLatency(durations []time.Duration) time.Duration {
 	if len(durations) == 0 {
 		return 0
