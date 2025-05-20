@@ -34,7 +34,7 @@ func TestExample(t *testing.T) {
 }
 ```
 
-### 指标计算
+### Metric Calculations
 | Metric Type       | Calculation Method                  | Notes     |
 |----------------|--------------------------|--------|
 | QPS            | Total requests / Duration (s)      | Includes failed requests  |
